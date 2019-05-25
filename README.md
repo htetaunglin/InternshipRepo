@@ -1,2 +1,2 @@
 # InternshipRepo
-I work as internship in <a href="https://www.facebook.com/javadeveloperclass/">JDC (Java Developer Class)</a>
+I worked as internship at <a href="https://www.facebook.com/javadeveloperclass/">JDC (Java Developer Class)</a>
