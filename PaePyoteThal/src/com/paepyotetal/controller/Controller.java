@@ -28,8 +28,8 @@ public class Controller {
 	public void run() {
 		showHeaderAndFooter(true);
 
-		// insert Items
-		Arrays.asList(setItems()).forEach(repo::insertItemsList);
+		// insert Item
+		Arrays.asList(getItemList()).forEach(repo::insertItemsList);
 
 		System.out.println("*************************");
 		System.out.println("***** READY TO SALE *****");
@@ -52,9 +52,10 @@ public class Controller {
 			System.out.println("******* Thank You *******");
 
 		System.out.println("*************************");
+
 	}
 
-	private ArrayList<Item> setItems() {
+	private ArrayList<Item> getItemList() {
 		ArrayList<Item> itemList = new ArrayList<>();
 
 		int j = 1;
@@ -91,8 +92,8 @@ public class Controller {
 			int itemID = getWantToHistoryItemID("Please select Item do you want to add.", false);
 			if (itemID == 0)
 				break;
-			showCurrentHistory(historyRep.addHistory(repo.findItem(ItemCategory.values()[itemID - 1]),
-					TheUtils.readInt("Please enter amount of Item : ")));
+			showCurrentHistory(
+					historyRep.addHistory(repo.findItem(itemID), TheUtils.readInt("Please enter amount of Item : ")));
 			break;
 		case 2:
 			int itemID2 = getWantToHistoryItemID("Please select Item to show history.", true);
@@ -108,9 +109,9 @@ public class Controller {
 	private void showCurrentHistory(SaleItem saleItem) {
 		System.out.println("----------------------");
 
-		System.out.println("Item\t:" + saleItem.getItem().getName());
-		System.out.println("Amount\t:" + saleItem.getAmount());
-		System.out.println("Total\t:" + saleItem.getItem().getTotal(saleItem.getAmount()));
+		System.out.println("Item\t: " + saleItem.getItem().getName());
+		System.out.println("Amount\t: " + saleItem.getAmount());
+		System.out.println("Total\t: " + saleItem.getItem().getTotal(saleItem.getAmount()));
 
 		System.out.println("----------------------");
 	}
@@ -137,20 +138,23 @@ public class Controller {
 	}
 
 	private void showHistoryList(List<SaleItem> list) {
-		String titleF = "%-10s%10s%10s%n";
-		String dataF = "%-10s%10d%10.1f%n";
+		String titleF = "%2s%4s%-10s%10s%10s%n";
+		String dataF = "%2d%4s%-10s%10d%10.1f%n";
+		String totalF = "%-5s%31.1f%n";
 
-		System.out.println("-------------------------------");
-		System.out.printf(titleF, "Item", "Amount", "Total");
-		System.out.println("-------------------------------");
+		System.out.println("-------------------------------------");
+		System.out.printf(titleF, "No", "", "Item", "Amount", "Total");
+		System.out.println("-------------------------------------");
 		if (list.size() == 0)
-			System.out.printf("%23s%n", "Nothing found!");// Nothing found!
+			System.out.printf("%23s%n", "Nothing found!"); // Nothing found!
 		else
 			for (SaleItem item : list) {
-				System.out.printf(dataF, item.getItem().getName(), item.getAmount(),
+				System.out.printf(dataF, i++, "", item.getItem().getName(), item.getAmount(),
 						item.getItem().getTotal(item.getAmount()));
 			}
-		System.out.println("-------------------------------");
+		System.out.println("-------------------------------------");
+		System.out.printf(totalF, "Total", historyRep.getTotalSales(list));
+		System.out.println("-------------------------------------");
 	}
 
 }

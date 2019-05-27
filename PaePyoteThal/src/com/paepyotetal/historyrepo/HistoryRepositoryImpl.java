@@ -48,4 +48,18 @@ public class HistoryRepositoryImpl implements HistoryRepository {
 		return list;
 	}
 
+	@Override
+	public double getTotalSales() {
+		return getTotalSales(historylist);
+	}
+
+	@Override
+	public double getTotalSales(List<SaleItem> saleList) {
+		double d = 0;
+		for (SaleItem sales : saleList) {
+			d += sales.getItem().getTotal(sales.getAmount());
+		}
+		return d;
+	}
+
 }

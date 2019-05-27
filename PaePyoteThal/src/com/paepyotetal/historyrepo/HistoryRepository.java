@@ -12,4 +12,8 @@ public interface HistoryRepository {
 
 	int getSize();
 
+	double getTotalSales();
+
+	double getTotalSales(List<SaleItem> saleList);
+
 }

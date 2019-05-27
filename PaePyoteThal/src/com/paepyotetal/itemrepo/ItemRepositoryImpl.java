@@ -3,7 +3,7 @@ package com.paepyotetal.itemrepo;
 import java.util.ArrayList;
 
 import com.paepyotetal.model.Item;
-import com.paepyotetal.model.ItemCategory;
+import com.paepyotetal.util.ItemException.ItemListDuplicateException;
 
 public class ItemRepositoryImpl implements ItemRepository {
 	private static ItemRepositoryImpl repo;
@@ -30,9 +30,9 @@ public class ItemRepositoryImpl implements ItemRepository {
 	}
 
 	@Override
-	public Item findItem(ItemCategory catory) {
+	public Item findItem(int itemID) {
 		for (Item item : itemList) {
-			if (item.getName().equals(catory.toString()))
+			if (item.getID() == itemID)
 				return item;
 		}
 		return null;
@@ -42,6 +42,7 @@ public class ItemRepositoryImpl implements ItemRepository {
 	public void insertItemsList(ArrayList<Item> list) {
 		if (itemList.isEmpty())
 			itemList = list;
+		else
+			throw new ItemListDuplicateException("Item List has been created. Insert no more one.");
 	}
-
 }
