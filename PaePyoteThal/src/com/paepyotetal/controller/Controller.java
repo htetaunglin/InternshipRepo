@@ -29,7 +29,7 @@ public class Controller {
 		showHeaderAndFooter(true);
 
 		// insert Item
-		Arrays.asList(getItemList()).forEach(repo::insertItemsList);
+		repo.insertItemsList(getItemList());
 
 		System.out.println("*************************");
 		System.out.println("***** READY TO SALE *****");
